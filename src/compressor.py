@@ -45,8 +45,14 @@ class Compressor:
             convert_to = self.config["convert"][imgInfo["format"]]
         else:
             convert_to = None
-        if self.config["overwrite"]:
+        if self.config["overwrite"] and convert_to == None :
             path = self.path
+        elif self.config["overwrite"] and convert_to != None:
+            directory, filename = os.path.split(self.path)
+            name, extension = os.path.splitext(filename)
+            extension = "." + convert_to.lower()
+            new_filename = name + "-compressed" + extension
+            path = os.path.join(directory, new_filename)
         else:
             directory, filename = os.path.split(self.path)
             name, extension = os.path.splitext(filename)
@@ -66,12 +72,16 @@ class Compressor:
         if(compress == None):
             return None
         extension = os.path.splitext(path)[1]
-        # NOTE: for some reason when webp is used with magick convert the new image size will be bigger
         if(extension == ".webp"):
            return None
         else:
             quality = f"-quality {compress['quality']}"
         # TODO: use a better way to compress
-        # NOTE: magick convert has many weird problems but it works for now
-        os.system(f"convert {path} {quality} {compress['path']}")
+        # NOTE: no matter what compression tool i use compressing webp results in bigger size ! so just ignore for now 
+        toPath = compress['path']
+        cpath = f'"{path}"'
+        toPath = f'"{toPath}"'
+        os.system(f"convert {cpath} {quality} {toPath}")
+        if path != compress['path']:
+            os.remove(path)
         return compress['path']
