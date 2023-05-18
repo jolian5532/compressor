@@ -3,3 +3,8 @@
 *.jpg
 *.jpeg
 __pycache__/
+public/
+a/
+*.css
+*.js
+*.html

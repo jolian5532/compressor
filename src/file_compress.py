@@ -5,7 +5,7 @@ from csscompressor import compress
 import htmlmin
 
 # js, css, html
-class file:
+class ffile:
     html_path = None
     def __init__(self,config):
         self.config = config  
@@ -40,8 +40,9 @@ class file:
                     file_name, extension = os.path.splitext(src_attr)
                     new_extension = self.config["convert"].get(extension[1:].upper()) 
                     if new_extension:
-                        # TODO: maybe add picture tag and srcset attribute!
-                        img_tag['src'] = file_name + '.' + new_extension.lower()
+                        if  os.path.basename(img_tag['src']) in self.config['imgs']:
+                            # TODO: maybe add picture tag and srcset attribute!
+                            img_tag['src'] = file_name + '.' + new_extension.lower()
             
             script_tags = soup.find_all('script')
             for script_tag in script_tags:
