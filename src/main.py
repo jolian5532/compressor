@@ -6,7 +6,7 @@ import os
 imgExts = ["jpg","png", "jpeg"]
 imgs = []
 convert = {"PNG":"WEBP"}
-folder = '../a/'
+folder = '../b/'
 
 file_types_in_folder = FileTypesInFolder(folder)
 files = file_types_in_folder.get_file_types()
@@ -50,4 +50,4 @@ for file_type, files in files.items():
         for file in files:
             compress.js(file)
             count = count + 1 
-           # print(f"JS : {count}/{length}")
+            print(f"JS : {count}/{length}")
